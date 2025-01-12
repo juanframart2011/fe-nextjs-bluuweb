@@ -4,12 +4,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
-        email: { label: "email", type: "email", placeholder: "test@test.com" },
+        email: { label: "email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
+        debugger;
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
           {

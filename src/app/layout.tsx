@@ -1,19 +1,12 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
-import SessionAuthProvider from "./context/SessionAuthProvider";
+
 import Navbar from "@/components/Navbar";
+import SessionAuthProvider from "@/context/SessionAuthProvider";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,17 +15,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={inter.className}>
         <main className="container">
-        <SessionAuthProvider>
-          <Navbar />
-          {children}
-        </SessionAuthProvider>
+          <SessionAuthProvider>
+            <Navbar />
+            {children}
+          </SessionAuthProvider>
         </main>
       </body>
     </html>

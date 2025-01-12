@@ -6,20 +6,20 @@ import { useState } from "react";
 
 const LoginPage = () => {
   const [errors, setErrors] = useState<string[]>([]);
-  const [email, setEmail] = useState<string>("test@test.com");
-  const [password, setPassword] = useState<string>("123123");
+  const [email, setEmail] = useState("test@test.com");
+  const [password, setPassword] = useState("123123");
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrors([]);
-
+    
     const responseNextAuth = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-
+    
     if (responseNextAuth?.error) {
       setErrors(responseNextAuth.error.split(","));
       return;
@@ -34,7 +34,7 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="test@test.com"
+          placeholder="lionel@messi.com"
           name="email"
           className="form-control mb-2"
           value={email}

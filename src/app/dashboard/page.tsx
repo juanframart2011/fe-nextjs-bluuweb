@@ -1,29 +1,33 @@
 "use client";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
+  const [cats, setCats] = useState([]);
 
   if (status === "loading") {
     return <p>Loading...</p>;
   }
-  console.log(session?.user?.token);
 
   const getCats = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cats`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user?.token}`,
+        authorization: `Bearer ${session?.user?.token}`,
       },
     });
     const data = await res.json();
-    console.log(data);
+    setCats(data);
   };
 
   return (
     <div>
       <h1>Dashboard</h1>
+      <pre>
+        <code>{JSON.stringify(session, null, 2)}</code>
+      </pre>
       <button
         onClick={getCats}
         className="btn btn-primary"
@@ -31,7 +35,7 @@ const Dashboard = () => {
         Get Cats
       </button>
       <pre>
-        <code>{JSON.stringify(session, null, 2)}</code>
+        <code>{JSON.stringify(cats, null, 2)}</code>
       </pre>
     </div>
   );
